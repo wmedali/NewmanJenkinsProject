@@ -84,83 +84,6 @@
 			"name": "OpenWeather",
 			"item": [
 				{
-					"name": "DataFromSourceFile",
-					"item": [
-						{
-							"name": "PreRequestScript Usage Example",
-							"event": [
-								{
-									"listen": "prerequest",
-									"script": {
-										"id": "b5485b5d-ade0-474b-a8ce-bbc1ef774acf",
-										"exec": [
-											"pm.environment.set(\"cityName\", data.City);",
-											"pm.environment.set(\"countryCode\", data.Country);"
-										],
-										"type": "text/javascript"
-									}
-								},
-								{
-									"listen": "test",
-									"script": {
-										"id": "e979994e-1db3-4f02-aa71-02bf9e751eba",
-										"exec": [
-											"pm.test(\"The response is for the requested city\", function(){",
-											"    var jsonData = pm.response.json(); ",
-											"    pm.expect(jsonData.name).to.equal(data.City);",
-											"});",
-											"",
-											"pm.environment.unset(\"cityName\");",
-											"pm.envrionment.unset(\"countryCode\");"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "APPID",
-										"type": "text",
-										"value": "{{openWeatherApiKey}}"
-									},
-									{
-										"key": "q",
-										"value": "{{cityName}},{{countryCode}}",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "api.openweathermap.org/data/2.5/weather?q={{cityName}},{{countryCode}}&APPID={{openWeatherApiKey}}",
-									"host": [
-										"api",
-										"openweathermap",
-										"org"
-									],
-									"path": [
-										"data",
-										"2.5",
-										"weather"
-									],
-									"query": [
-										{
-											"key": "q",
-											"value": "{{cityName}},{{countryCode}}"
-										},
-										{
-											"key": "APPID",
-											"value": "{{openWeatherApiKey}}"
-										}
-									]
-								}
-							},
-							"response": []
-						}
-					],
-					"_postman_isSubFolder": true
-				},
-				{
 					"name": "PreRequestScript Example",
 					"event": [
 						{
@@ -391,6 +314,104 @@
 						}
 					},
 					"response": []
+				}
+			]
+		},
+		{
+			"name": "DataFromSourceFileOpenWeather",
+			"item": [
+				{
+					"name": "PreRequestScript Usage Example",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "b5485b5d-ade0-474b-a8ce-bbc1ef774acf",
+								"exec": [
+									"pm.environment.set(\"cityName\", data.City);",
+									"pm.environment.set(\"countryCode\", data.Country);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "e979994e-1db3-4f02-aa71-02bf9e751eba",
+								"exec": [
+									"pm.test(\"The response is for the requested city\", function(){",
+									"    var jsonData = pm.response.json(); ",
+									"    pm.expect(jsonData.name).to.equal(data.City);",
+									"});",
+									"",
+									"//pm.environment.unset(\"cityName\");",
+									"//pm.envrionment.unset(\"countryCode\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "APPID",
+								"type": "text",
+								"value": "{{openWeatherApiKey}}"
+							},
+							{
+								"key": "q",
+								"value": "{{cityName}},{{countryCode}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "api.openweathermap.org/data/2.5/weather?q={{cityName}},{{countryCode}}&APPID={{openWeatherApiKey}}",
+							"host": [
+								"api",
+								"openweathermap",
+								"org"
+							],
+							"path": [
+								"data",
+								"2.5",
+								"weather"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "{{cityName}},{{countryCode}}"
+								},
+								{
+									"key": "APPID",
+									"value": "{{openWeatherApiKey}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "083cceed-af3c-4196-9de7-bc72c842a432",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "d62f0897-f5ba-411f-a40d-a9a1f065c908",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			]
 		}

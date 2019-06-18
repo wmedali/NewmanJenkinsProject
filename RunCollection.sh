@@ -1,5 +1,5 @@
 # newman run FreeAPIs.postman_collection.json --folder JsonPlaceHolder -d jsonPlaceHolderData.json -e TestEnv.postman_environment.json -r junit --reporter-junit-export 'newman/JsonPlaceHolder.xml'
 # newman run FreeAPIs.postman_collection.json --folder OpenWeather/DataFromSourceFile -d openWeatherData.json -e TestEnv.postman_environment.json -r junit --reporter-junit-export 'DataFromSourceFile.xml'
 # newman run FreeAPIs.postman_collection.json --folder RandomUser  -e TestEnv.postman_environment.json -r junit --reporter-junit-export 'newman/RandomUser.xml'
-# newman run FreeAPIs.postman_collection.json --folder WorkflowTesting  -e TestEnv.postman_environment.json -r junit --reporter-junit-export 'newman/WorkflowTesting.xml'
-newman run FreeAPIs.postman_collection.json --folder OpenWeather -e TestEnv.postman_environment.json -r junit --reporter-junit-export 'newman/OpenWeather.xml'
+newman run FreeAPIs.postman_collection.json --folder WorkflowTesting  -e TestEnv.postman_environment.json -r junit --reporter-junit-export 'newman/WorkflowTesting.xml'
+#newman run FreeAPIs.postman_collection.json --folder OpenWeather -e TestEnv.postman_environment.json -r junit --reporter-junit-export 'newman/OpenWeather.xml'
