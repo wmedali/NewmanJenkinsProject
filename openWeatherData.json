@@ -1,0 +1,15 @@
+[
+	{
+		"City": "Paris",
+		"Country": "Fr"
+	}, {
+		"City": "Rennes",
+		"Country": "Fr"
+	}, {
+		"City": "London",
+		"Country": "Uk"
+	}, {
+		"City": "California",
+		"Country": "Us"
+	}
+]
