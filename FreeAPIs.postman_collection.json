@@ -1,0 +1,398 @@
+{
+	"info": {
+		"_postman_id": "bcda9671-31c7-4a74-bb6b-23e35a744609",
+		"name": "Free APIs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "RandomUser",
+			"item": [
+				{
+					"name": "RandomApi ",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "dataType",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{randomApiUrl}}",
+							"host": [
+								"{{randomApiUrl}}"
+							]
+						},
+						"description": "Make use of free \nhttps://randomuser.me/ API"
+					},
+					"response": []
+				},
+				{
+					"name": "TestRandomUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4039068c-0508-4147-adb6-706404faba8f",
+								"exec": [
+									"// example using pm.response.to.have",
+									"pm.test(\"Response is 200 OK \", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"//Demonstrate use case with importance of DevTools (trying to access undefined ..)",
+									"",
+									"pm.test(\"Ensure every male is Mr and female is ms/mme\", function() {",
+									"   ",
+									"    var jsonData = pm.response.json();",
+									"    var gender = jsonData.results[0].gender;",
+									"    var title = jsonData.results[0].name.title;",
+									"    //console.log(jsonData);",
+									"    //console.log(\"Gender : \" + gender);",
+									"    //console.log(\"Title : \" + title);",
+									"   switch(gender) {",
+									"        case(\"male\") :",
+									"            pm.expect(title).to.equal(\"mr\");",
+									"            break;",
+									"        case(\"female\") :",
+									"            pm.expect(title).to.be.oneOf([\"ms\",\"mrs\",\"miss\"]);",
+									"            break;",
+									"   }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{randomApiUrl}}",
+							"host": [
+								"{{randomApiUrl}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "OpenWeather",
+			"item": [
+				{
+					"name": "DataFromSourceFile",
+					"item": [
+						{
+							"name": "PreRequestScript Usage Example",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "b5485b5d-ade0-474b-a8ce-bbc1ef774acf",
+										"exec": [
+											"pm.environment.set(\"cityName\", data.City);",
+											"pm.environment.set(\"countryCode\", data.Country);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "e979994e-1db3-4f02-aa71-02bf9e751eba",
+										"exec": [
+											"pm.test(\"The response is for the requested city\", function(){",
+											"    var jsonData = pm.response.json(); ",
+											"    pm.expect(jsonData.name).to.equal(data.City);",
+											"});",
+											"",
+											"pm.environment.unset(\"cityName\");",
+											"pm.envrionment.unset(\"countryCode\");"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "APPID",
+										"type": "text",
+										"value": "{{openWeatherApiKey}}"
+									},
+									{
+										"key": "q",
+										"value": "{{cityName}},{{countryCode}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "api.openweathermap.org/data/2.5/weather?q={{cityName}},{{countryCode}}&APPID={{openWeatherApiKey}}",
+									"host": [
+										"api",
+										"openweathermap",
+										"org"
+									],
+									"path": [
+										"data",
+										"2.5",
+										"weather"
+									],
+									"query": [
+										{
+											"key": "q",
+											"value": "{{cityName}},{{countryCode}}"
+										},
+										{
+											"key": "APPID",
+											"value": "{{openWeatherApiKey}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "PreRequestScript Example",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "b5485b5d-ade0-474b-a8ce-bbc1ef774acf",
+								"exec": [
+									"pm.environment.set(\"id\", \"6455259\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "e979994e-1db3-4f02-aa71-02bf9e751eba",
+								"exec": [
+									"pm.test(\"The Id is well set\", function() {",
+									"    var id = pm.variables.get(\"id\");",
+									"    console.log(id);",
+									"    pm.expect(id).to.equal('6455259');",
+									"});",
+									"",
+									"pm.test(\"The Id corresponds to Paris\", function(){",
+									"    var jsonData = pm.response.json(); ",
+									"    pm.expect(jsonData.name).to.equal(\"Paris\");",
+									"});",
+									"",
+									"//pm.environment.unset(\"id\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "id",
+								"value": "{{id}}",
+								"type": "text"
+							},
+							{
+								"key": "APPID",
+								"value": "{{openWeatherApiKey}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "api.openweathermap.org/data/2.5/weather?id={{id}}&APPID={{openWeatherApiKey}}",
+							"host": [
+								"api",
+								"openweathermap",
+								"org"
+							],
+							"path": [
+								"data",
+								"2.5",
+								"weather"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{id}}"
+								},
+								{
+									"key": "APPID",
+									"value": "{{openWeatherApiKey}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "JsonPlaceHolder",
+			"item": [
+				{
+					"name": "PostRequest",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "3d1bd6a6-2a85-4a01-b6f8-599202db4a10",
+								"exec": [
+									"pm.environment.set(\"title\", data.title);",
+									"pm.environment.set(\"body\", data.body);",
+									"pm.environment.set(\"id\", data.userId);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "dd8e576b-be24-4e38-8d52-0ca18e2c8200",
+								"exec": [
+									"pm.test(\"Check data consistency\", function(){",
+									"   var jsonResponse = pm.response.json();",
+									"   pm.expect(jsonResponse.title).to.equal(data.title);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"{{title}}\",\n    \"body\": \"{{body}}\",\n    \"userId\": \"{{id}}\"\n}"
+						},
+						"url": {
+							"raw": "https://jsonplaceholder.typicode.com/posts",
+							"protocol": "https",
+							"host": [
+								"jsonplaceholder",
+								"typicode",
+								"com"
+							],
+							"path": [
+								"posts"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "WorkflowTesting",
+			"item": [
+				{
+					"name": "DynamicDataRetrieval",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "56a19562-d205-46c0-ad69-d4b3e1d49db8",
+								"exec": [
+									"pm.sendRequest('https://randomuser.me/api/', function(err, res) {",
+									"    if (err) {",
+									"        console.log(err);",
+									"    } else {",
+									"        var response = res.json().results[0];",
+									"        var title = response.name.title;",
+									"        var first = response.name.first;",
+									"        var last = response.name.last;",
+									"        var email =  response.email;",
+									"        var userId = response.login.uuid;",
+									"        ",
+									"        var body = 'I am ' + title + ' ' + first + ' ' + last ;",
+									"        body += ' And my email address is : ' + email;",
+									"        ",
+									"        pm.variables.set(\"title\", title);",
+									"        pm.variables.set(\"body\", body);",
+									"        pm.variables.set(\"userId\", userId);",
+									"        console.log(first);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "757ccde1-796b-4d0d-832c-98679a93dc1e",
+								"exec": [
+									"var jsonResponse = pm.response.json();",
+									"",
+									"pm.test(\"Title is not null\", function() {",
+									"    pm.expect(jsonResponse.title).to.be.not.null;",
+									"});",
+									"",
+									"pm.test(\"Body field is not null\", function() {",
+									"    pm.expect(jsonResponse.body).to.be.not.null;",
+									"});",
+									"",
+									"pm.test(\"UserId is not null\", function() {",
+									"    pm.expect(jsonResponse.userId).to.be.not.null;",
+									"",
+									"});",
+									"",
+									"pm.test(\"Id is not null\", function() {",
+									"    pm.expect(jsonResponse.id).to.be.not.null;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"{{title}}\",\n    \"body\": \"{{body}}\",\n    \"userId\": \"{{userId}}\"\n}"
+						},
+						"url": {
+							"raw": "https://jsonplaceholder.typicode.com/posts",
+							"protocol": "https",
+							"host": [
+								"jsonplaceholder",
+								"typicode",
+								"com"
+							],
+							"path": [
+								"posts"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
